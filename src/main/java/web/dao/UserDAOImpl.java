@@ -35,6 +35,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUser(Long id) {
-        em.remove(em.find(User.class, id));
+        em.remove(getUserById(id));
     }
 }
