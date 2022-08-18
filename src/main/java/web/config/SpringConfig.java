@@ -60,7 +60,7 @@ public class SpringConfig {
         try {
             InputStream inputStream = getClass()
                     .getClassLoader()
-                    .getResourceAsStream("hibernate.properties");
+                    .getResourceAsStream("db.properties");
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
