@@ -1,7 +1,5 @@
 package web.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -14,7 +12,6 @@ public class User {
     private Long id;
 
     @Column(name = "first_name")
-
     private String firstName;
 
     @Column(name = "last_name")
@@ -75,7 +72,7 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return id == user.id && age == user.age && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName);
+        return getAge() == user.getAge() && getFirstName().equals(user.getFirstName()) && getLastName().equals(user.getLastName());
     }
 
     @Override

@@ -13,8 +13,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
@@ -36,7 +34,7 @@ public class SpringConfig {
         entityManager.setDataSource(getDataSource());
         entityManager.setPackagesToScan(env.getProperty("db.entity.package"));
         entityManager.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManager.setJpaProperties(additionalProperties());
+        entityManager.setJpaProperties(hibernateProperties());
         return entityManager;
     }
 
@@ -55,16 +53,10 @@ public class SpringConfig {
         return new JpaTransactionManager(entityManagerFactoryBean().getObject());
     }
 
-    Properties additionalProperties() {
+    private Properties hibernateProperties() {
         Properties properties = new Properties();
-        try {
-            InputStream inputStream = getClass()
-                    .getClassLoader()
-                    .getResourceAsStream("db.properties");
-            properties.load(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         return properties;
     }
 }
